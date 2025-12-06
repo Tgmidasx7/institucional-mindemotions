@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mind Emotions - Infraestrutura de Inteligência Socioemocional para o Futuro da Educação.">
+    <title>Mind Emotions | Inteligência Socioemocional Escolar</title>
+    
+    <!-- Google Fonts: Inter para legibilidade moderna -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Configurações Personalizadas do Tailwind -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        mind: {
+                            dark: '#0f172a',    // Azul Profundo (Slate-900)
+                            primary: '#1e40af', // Azul Institucional
+                            accent: '#14b8a6',  // Verde Menta (Teal-500)
+                            light: '#f0fdfa',   // Menta Suavíssima (Teal-50)
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.8s ease-out forwards',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ajustes finos de acessibilidade e scroll */
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- 1. BARRA DE NAVEGAÇÃO -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-slate-100 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <div class="w-8 h-8 bg-mind-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">M</div>
+                    <span class="font-bold text-xl tracking-tight text-mind-dark">Mind <span class="text-mind-accent">Emotions</span></span>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="#solucao" class="text-sm font-medium text-slate-600 hover:text-mind-primary transition-colors">A Solução</a>
+                    <a href="#escolas" class="text-sm font-medium text-slate-600 hover:text-mind-primary transition-colors">Para Escolas</a>
+                    <a href="#familias" class="text-sm font-medium text-slate-600 hover:text-mind-primary transition-colors">Para Famílias</a>
+                    <a href="#metodologia" class="text-sm font-medium text-slate-600 hover:text-mind-primary transition-colors">Metodologia</a>
+                    <a href="#" class="text-sm font-medium text-slate-600 hover:text-mind-primary transition-colors">Blog</a>
+                </div>
+
+                <!-- Botões de Ação Desktop -->
+                <div class="hidden lg:flex items-center space-x-4">
+                    <button class="text-sm font-semibold text-mind-primary hover:text-mind-dark px-3 py-2 transition-colors">
+                        <i class="fa-solid fa-user-lock mr-2"></i>Área do Cliente
+                    </button>
+                    <button class="bg-mind-primary hover:bg-blue-800 text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-blue-500/30 transition-all hover:scale-105">
+                        Agendar Demonstração
+                    </button>
+                </div>
+
+                <!-- Botão Menu Mobile -->
+                <div class="lg:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-slate-600 hover:text-mind-primary focus:outline-none p-2">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu Mobile (Hidden by default) -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-slate-100 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2 shadow-lg">
+                <a href="#solucao" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-mind-light hover:text-mind-primary">A Solução</a>
+                <a href="#escolas" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-mind-light hover:text-mind-primary">Para Escolas</a>
+                <a href="#familias" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-mind-light hover:text-mind-primary">Para Famílias</a>
+                <a href="#metodologia" class="block px-3 py-3 rounded-md text-base font-medium text-slate-700 hover:bg-mind-light hover:text-mind-primary">Metodologia</a>
+                <div class="border-t border-slate-100 mt-4 pt-4 flex flex-col gap-3">
+                    <button class="w-full text-center text-mind-primary font-semibold py-2 border border-mind-primary rounded-lg">
+                        Área do Cliente
+                    </button>
+                    <button class="w-full text-center bg-mind-primary text-white font-semibold py-3 rounded-lg shadow-md">
+                        Agendar Demonstração
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. SEÇÃO HERO -->
+    <header class="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden bg-gradient-to-br from-slate-50 to-blue-50">
+        <!-- Elemento decorativo de fundo -->
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-mind-accent/10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-500/10 blur-3xl"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <!-- Conteúdo Textual -->
+                <div class="text-center lg:text-left animate-fade-in-up">
+                    <div class="inline-flex items-center gap-2 bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6">
+                        <span class="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></span>
+                        Em conformidade com a Lei 14.531/2023
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-mind-dark leading-tight mb-6">
+                        Tecnologia e <span class="text-mind-primary">Afeto</span>: A base para o futuro da educação.
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                        Transformamos o ambiente escolar através do mapeamento preventivo de emoções. Uma plataforma completa de desenvolvimento cognitivo e emocional, alinhada à BNCC.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="bg-mind-primary hover:bg-blue-800 text-white px-8 py-4 rounded-lg font-semibold text-lg shadow-xl shadow-blue-900/10 transition-transform hover:-translate-y-1">
+                            Conheça Nossa Metodologia
+                        </button>
+                        <button class="bg-white hover:bg-slate-50 text-mind-dark border border-slate-200 px-8 py-4 rounded-lg font-semibold text-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+                            <i class="fa-brands fa-whatsapp text-green-500 text-xl"></i> Falar com Consultor
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Elemento Visual -->
+                <div class="relative lg:h-[600px] flex items-center justify-center reveal">
+                    <!-- Placeholder de Imagem Humanizada -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition-all duration-500 w-full max-w-md lg:max-w-full h-80 lg:h-full">
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Professora interagindo com aluna feliz usando tablet" class="w-full h-full object-cover">
+                        <!-- Card Flutuante -->
+                        <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border-l-4 border-mind-accent max-w-[200px]">
+                            <div class="text-xs text-slate-500 font-semibold uppercase mb-1">Status da Turma</div>
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-face-smile text-yellow-400 text-2xl"></i>
+                                <span class="font-bold text-mind-dark">Clima Positivo</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 3. SEÇÃO INSTITUCIONAL -->
+    <section id="solucao" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <div class="lg:col-span-5 reveal">
+                    <h2 class="text-3xl font-bold text-mind-dark mb-6">Mais que um App,<br>um <span class="text-mind-accent">Ecossistema de Proteção</span>.</h2>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                        A Mind Emotions nasce da necessidade de dar voz ao que muitas vezes é invisível na sala de aula. 
+                    </p>
+                    <p class="text-slate-600 text-lg leading-relaxed mb-6">
+                        Somos uma edtech focada em mapeamento e desenvolvimento socioeducativo. Unimos tecnologia de dados, psicologia preventiva e pedagogia para criar ambientes onde o desempenho cognitivo cresce junto com a saúde emocional.
+                    </p>
+                </div>
+                <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 reveal">
+                    <!-- Card Segurança -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-mind-primary text-2xl mb-4">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-mind-dark mb-2">Segurança de Dados</h3>
+                        <p class="text-slate-600 text-sm">Conformidade rigorosa com a LGPD (Lei Geral de Proteção de Dados). Seus dados criptografados e seguros.</p>
+                    </div>
+                    <!-- Card Validação -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center text-mind-accent text-2xl mb-4">
+                            <i class="fa-solid fa-certificate"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-mind-dark mb-2">Validação Acadêmica</h3>
+                        <p class="text-slate-600 text-sm">Metodologia desenvolvida com apoio técnico de especialistas e parcerias acadêmicas (UFPI/IFPI).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. SEÇÃO SEGMENTADA (Jornada) -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <span class="text-mind-primary font-bold tracking-wide uppercase text-sm">A Solução Completa</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-mind-dark mt-2">Tecnologia para conectar toda a comunidade escolar</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Card Escolas -->
+                <div id="escolas" class="bg-white rounded-2xl p-8 shadow-lg shadow-slate-200/50 border-t-4 border-mind-primary hover:-translate-y-2 transition-transform duration-300 reveal flex flex-col">
+                    <div class="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center text-mind-primary text-3xl mb-6 mx-auto">
+                        <i class="fa-solid fa-chalkboard-user"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-mind-dark text-center mb-4">Para Escolas</h3>
+                    <p class="text-slate-600 text-center text-sm mb-6 flex-grow">
+                        Reduza conflitos, previna a evasão escolar e cumpra diretrizes de saúde mental. Diagnostique o clima da turma em tempo real.
+                    </p>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> Relatórios pedagógicos automáticos</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> Identificação de isolamento/ansiedade</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-green-500 mt-1"></i> Fortalecimento do vínculo escolar</li>
+                    </ul>
+                    <button class="w-full py-3 border-2 border-mind-primary text-mind-primary font-bold rounded-lg hover:bg-mind-primary hover:text-white transition-colors">
+                        Soluções para Gestores
+                    </button>
+                </div>
+
+                <!-- Card Alunos (Destaque) -->
+                <div class="bg-white rounded-2xl p-8 shadow-xl shadow-purple-200/50 border-t-4 border-purple-500 relative transform md:-translate-y-4 hover:-translate-y-6 transition-transform duration-300 reveal flex flex-col">
+                    <span class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-purple-600 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">O Coração do Projeto</span>
+                    <div class="w-16 h-16 bg-purple-50 rounded-full flex items-center justify-center text-purple-600 text-3xl mb-6 mx-auto">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-mind-dark text-center mb-4">Para Alunos</h3>
+                    <p class="text-slate-600 text-center text-sm mb-6 flex-grow">
+                        Um espaço seguro e divertido para expressar o que você sente. Sem textões chatos, sem julgamentos. Gamificado e engajador.
+                    </p>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Gamificação envolvente</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Diário emocional interativo</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-purple-500 mt-1"></i> Desenvolvimento da autoconfiança</li>
+                    </ul>
+                    <button class="w-full py-3 bg-purple-600 text-white font-bold rounded-lg hover:bg-purple-700 transition-colors shadow-lg shadow-purple-500/30">
+                        Conheça o App
+                    </button>
+                </div>
+
+                <!-- Card Famílias -->
+                <div id="familias" class="bg-white rounded-2xl p-8 shadow-lg shadow-slate-200/50 border-t-4 border-mind-accent hover:-translate-y-2 transition-transform duration-300 reveal flex flex-col">
+                    <div class="w-16 h-16 bg-teal-50 rounded-full flex items-center justify-center text-mind-accent text-3xl mb-6 mx-auto">
+                        <i class="fa-solid fa-hands-holding-child"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-mind-dark text-center mb-4">Para Famílias</h3>
+                    <p class="text-slate-600 text-center text-sm mb-6 flex-grow">
+                        Entenda o universo emocional do seu filho. Receba orientações e acompanhe o desenvolvimento com transparência.
+                    </p>
+                    <ul class="space-y-3 mb-8 text-sm text-slate-600">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-mind-accent mt-1"></i> Insights sobre bem-estar</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-mind-accent mt-1"></i> Dicas de atividades em casa</li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-mind-accent mt-1"></i> Canal seguro de escuta</li>
+                    </ul>
+                    <button class="w-full py-3 border-2 border-mind-accent text-mind-accent font-bold rounded-lg hover:bg-mind-accent hover:text-white transition-colors">
+                        App para Famílias
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. COMO FUNCIONA (Metodologia) -->
+    <section id="metodologia" class="py-20 bg-white overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Crianças aprendendo juntas" class="rounded-2xl shadow-2xl">
+                </div>
+                <div class="reveal">
+                    <h2 class="text-3xl font-bold text-mind-dark mb-8">Metodologia baseada em dados e afeto</h2>
+                    
+                    <div class="space-y-8">
+                        <!-- Step 1 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg z-10">1</div>
+                            <div>
+                                <h4 class="text-xl font-bold text-mind-dark">Mapeamento Lúdico</h4>
+                                <p class="text-slate-600 mt-2">O aluno realiza check-ins emocionais rápidos através de uma interface gamificada e amigável.</p>
+                            </div>
+                        </div>
+                        <!-- Line connector (visual trick) -->
+                        <div class="w-0.5 h-8 bg-slate-200 ml-6 -mt-6 mb-2"></div>
+
+                        <!-- Step 2 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white border-2 border-blue-600 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl shadow-lg z-10">2</div>
+                            <div>
+                                <h4 class="text-xl font-bold text-mind-dark">Processamento Inteligente</h4>
+                                <p class="text-slate-600 mt-2">Nossa tecnologia analisa padrões e gera indicadores de competências socioemocionais em tempo real.</p>
+                            </div>
+                        </div>
+                        <div class="w-0.5 h-8 bg-slate-200 ml-6 -mt-6 mb-2"></div>
+
+                        <!-- Step 3 -->
+                        <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-white border-2 border-blue-600 text-blue-600 rounded-full flex items-center justify-center font-bold text-xl shadow-lg z-10">3</div>
+                            <div>
+                                <h4 class="text-xl font-bold text-mind-dark">Intervenção Pedagógica</h4>
+                                <p class="text-slate-600 mt-2">Relatórios acionáveis e sugestões preventivas (não clínicas) são enviadas para a escola e família.</p>
+                            </div>
+                        </div>
+                        <div class="w-0.5 h-8 bg-slate-200 ml-6 -mt-6 mb-2"></div>
+
+                         <!-- Step 4 -->
+                         <div class="flex gap-4">
+                            <div class="flex-shrink-0 w-12 h-12 bg-mind-accent text-white rounded-full flex items-center justify-center font-bold text-xl shadow-lg z-10"><i class="fa-solid fa-infinity text-sm"></i></div>
+                            <div>
+                                <h4 class="text-xl font-bold text-mind-dark">Evolução Contínua</h4>
+                                <p class="text-slate-600 mt-2">Acompanhamento do progresso da turma e do aluno ao longo de todo o ano letivo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. PROVA SOCIAL & IMPACTO -->
+    <section class="py-20 bg-mind-primary text-white relative overflow-hidden">
+        <!-- Background Pattern -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#ffffff 1px, transparent 1px); background-size: 30px 30px;"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center mb-16">
+                <div class="reveal">
+                    <div class="text-4xl lg:text-5xl font-extrabold mb-2">+50</div>
+                    <div class="text-blue-200 font-medium text-lg">Escolas Impactadas</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl lg:text-5xl font-extrabold mb-2">+2.700</div>
+                    <div class="text-blue-200 font-medium text-lg">Alunos Mapeados</div>
+                </div>
+                <div class="reveal">
+                    <div class="text-4xl lg:text-5xl font-extrabold mb-2">100%</div>
+                    <div class="text-blue-200 font-medium text-lg">Foco em Prevenção</div>
+                </div>
+            </div>
+
+            <div class="bg-white/10 backdrop-blur-md rounded-2xl p-8 lg:p-12 max-w-4xl mx-auto text-center reveal border border-white/20">
+                <i class="fa-solid fa-quote-left text-4xl text-mind-accent mb-6 opacity-80"></i>
+                <p class="text-xl lg:text-2xl font-light italic leading-relaxed mb-6">
+                    "Finalmente uma ferramenta que traduz o sentimento do aluno em dados que a escola pode usar para acolher melhor, sem achismos."
+                </p>
+                <div class="font-bold text-lg">— Coordenação Pedagógica (Projeto Piloto)</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center reveal">
+            <h2 class="text-3xl font-bold text-mind-dark mb-6">Pronto para transformar sua escola?</h2>
+            <p class="text-slate-600 mb-8">Leve a inteligência socioemocional para sua instituição ainda este ano.</p>
+            <button class="bg-mind-dark hover:bg-black text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl transition-transform hover:-translate-y-1">
+                Falar com um Consultor Agora
+            </button>
+        </div>
+    </section>
+
+    <!-- 7. RODAPÉ -->
+    <footer class="bg-slate-900 text-slate-300 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Coluna 1: Info -->
+                <div>
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-mind-primary rounded-lg flex items-center justify-center text-white font-bold text-xl">M</div>
+                        <span class="font-bold text-xl text-white">Mind Emotions</span>
+                    </div>
+                    <p class="text-sm leading-relaxed mb-6 text-slate-400">
+                        Infraestrutura de inteligência socioemocional conectando escolas, famílias e alunos para um futuro mais saudável.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-mind-primary transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-mind-primary transition-colors"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <!-- Coluna 2: Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Institucional</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Sobre Nós</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Metodologia</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Trabalhe Conosco</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Imprensa</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3: Legal -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Legal & Suporte</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-mind-accent transition-colors flex items-center gap-2"><i class="fa-solid fa-shield-halved text-xs"></i> Política de Privacidade</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Portal de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-mind-accent transition-colors">Compliance LGPD</a></li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 4: Contato -->
+                <div>
+                    <h4 class="text-white font-bold mb-6">Contato</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-envelope mt-1 text-mind-primary"></i>
+                            <span>contato@mindemotions.com.br</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-mind-primary"></i>
+                            <span>Teresina, Piauí, Brasil.</span>
+                        </li>
+                    </ul>
+                    <div class="mt-8">
+                        <span class="text-xs uppercase font-bold text-slate-500 block mb-2">Apoiado por:</span>
+                        <div class="flex gap-4 opacity-70 grayscale hover:grayscale-0 transition-all">
+                            <!-- Placeholders para Logos de Apoio -->
+                            <div class="h-8 bg-slate-700 w-24 rounded flex items-center justify-center text-[10px] font-bold">Investe Piauí</div>
+                            <div class="h-8 bg-slate-700 w-24 rounded flex items-center justify-center text-[10px] font-bold">Startup Piauí</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
+                <p>&copy; 2025 Mind Emotions. Todos os direitos reservados.</p>
+                <p class="mt-2 md:mt-0">Idealizado por Thiago Barbosa Aragão.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts de Interação -->
+    <script>
+        // Menu Mobile Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Scroll Animation (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Anima apenas uma vez
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach((el) => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
